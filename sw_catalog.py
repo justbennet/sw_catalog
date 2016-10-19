@@ -39,11 +39,11 @@ def process_pkgInfo(root, file):
     whatis_patterns = {
         'pkg_name'   : re.compile('whatis\("Name: (.*)\"\)'),
         'pkg_desc'   : re.compile('whatis\("Description: (.*)\"\)'),
-        'docs'       : re.compile('whatis\("Package documentation: (.*)\"\)')
+        'docs'       : re.compile('whatis\("Package documentation: (.*)\"\)'),
         'arc_ex'     : re.compile('whatis\("ARC examples: (.*)\"\)'),
         'license'    : re.compile('whatis\("License information: (.*)\"\)'),
         'categories' : re.compile('whatis\("Categories: (.*)\"\)'),
-        'pkg_url'    : re.compile('whatis\("Package website: (.*)\"\)'),
+        'pkg_url'    : re.compile('whatis\("Package website: (.*)\"\)')
     }
     pkgInfoFile = '/'.join([root, file])
     with open(pkgInfoFile, "r") as module_file:
