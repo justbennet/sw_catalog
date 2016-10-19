@@ -72,6 +72,8 @@ for tree in module_trees:
     #  We really only use root, for dirname, and files for filenames
     for root, dirs, files in os.walk(tree):
         for file in files:
+            if root.find('.git') > 0:
+                continue
             module = root.replace(tree+'/', '')
             module = module.split('/')[0]
             if module not in modInfo:
@@ -94,7 +96,12 @@ for tree in module_trees:
 
 #  Print out what we have for human consumpition
 for key in sorted(modInfo.keys(), key=str.lower):
-    print "\n", "Key: ", key,
-    print "\t", "Versions: ", key+"/".join(modInfo[key]['versions'])
-    for mod_info in modInfo[key]['pkgInfo'].keys():
-        print "\t", mod_info, ": ", modInfo[key]['pkgInfo'][mod_info]
+    print "==============================================="
+    print "\n", key
+    print "\t", "Versions: ", "; ".join(modInfo[key]['versions']).strip()
+    print "\t", "Description: ", modInfo[key]['pkgInfo']['pkg_desc']
+    if 'license' in modInfo[key]['pkgInfo']:
+        print "\t", "License: ", modInfo[key]['pkgInfo']['license']
+    if 'pkg_url' in modInfo[key]['pkgInfo']:
+        print "\t", "Package web site: ", modInfo[key]['pkgInfo']['pkg_url']
+print "==============================================="
