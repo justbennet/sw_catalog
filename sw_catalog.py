@@ -42,7 +42,7 @@ def process_pkgInfo(root, file):
         'docs'       : re.compile('whatis\("Package documentation: (.*)\"\)'),
         'arc_ex'     : re.compile('whatis\("ARC examples: (.*)\"\)'),
         'license'    : re.compile('whatis\("License information: (.*)\"\)'),
-        'categories' : re.compile('whatis\("Categories: (.*)\"\)'),
+        'categories' : re.compile('whatis\("Category: (.*)\"\)'),
         'pkg_url'    : re.compile('whatis\("Package website: (.*)\"\)')
     }
     pkgInfoFile = '/'.join([root, file])
@@ -104,4 +104,6 @@ for key in sorted(modInfo.keys(), key=str.lower):
         print "\t", "License: ", modInfo[key]['pkgInfo']['license']
     if 'pkg_url' in modInfo[key]['pkgInfo']:
         print "\t", "Package web site: ", modInfo[key]['pkgInfo']['pkg_url']
+    if 'categories' in modInfo[key]['pkgInfo']:
+        print "\t", "Categories: ", modInfo[key]['pkgInfo']['categories']
 print "==============================================="
