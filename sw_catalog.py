@@ -1,6 +1,7 @@
 import os
 from   os.path import islink as islink
 import re
+import textwrap
 
 #  Set the trees themselves, [ 'supporting unit', tree ]
 module_trees = [ ['arc',   '/sw/arc/centos7/modulefiles'],
@@ -108,15 +109,25 @@ for tree in module_trees:
 #         print "\t", "Categories: ", modInfo[key]['pkgInfo']['categories']
 # print "==============================================="
 
+def item_label(label):
+    return '{:<14}'.format(label)
+
+def wrapped_item(item):
+    return textwrap.fill(item,
+                         initial_indent = '',
+                         subsequent_indent = 14*' ')
+
 def print_catalog():
     #  Print out what we have for the catalog page
     for key in sorted(modInfo.keys(), key=str.lower):
-        print "\n", key
+        print 2*"\n", key
         print 60*"="
-        print "Versions: ", key+"/".join(modInfo[key]['versions'])
-        print "Description: ", modInfo[key]['pkgInfo']['pkg_desc']
+        print wrapped_item(item_label("Versions:") + key+"/".join(modInfo[key]['versions']))
+        print wrapped_item(item_label("Description:") + modInfo[key]['pkgInfo']['pkg_desc'])
         if 'license' in modInfo[key]['pkgInfo']:
-            print "License: ", modInfo[key]['pkgInfo']['license']
+            print wrapped_item(item_label("License:") + modInfo[key]['pkgInfo']['license'])
+        if 'categories' in modInfo[key]['pkgInfo']:
+            print wrapped_item(item_label("Categories:") + modInfo[key]['pkgInfo']['categories'])
         print 60*"="
 
 def print_all():
