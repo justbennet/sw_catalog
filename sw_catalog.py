@@ -39,11 +39,11 @@ def process_pkgInfo(root, file):
     whatis_patterns = {
         'pkg_name'   : re.compile('whatis\("Name: (.*)\"\)'),
         'pkg_desc'   : re.compile('whatis\("Description: (.*)\"\)'),
-        'docs'       : re.compile('whatis\("Package documentation: (.*)\"\)'),
-        'arc_ex'     : re.compile('whatis\("ARC examples: (.*)\"\)'),
+        'pkg_url'    : re.compile('whatis\("Package website: (.*)\"\)'),
         'license'    : re.compile('whatis\("License information: (.*)\"\)'),
+        'arc_ex'     : re.compile('whatis\("ARC examples: (.*)\"\)'),
         'categories' : re.compile('whatis\("Category: (.*)\"\)'),
-        'pkg_url'    : re.compile('whatis\("Package website: (.*)\"\)')
+        'docs'       : re.compile('whatis\("Package documentation: (.*)\"\)')
     }
     pkgInfoFile = '/'.join([root, file])
     with open(pkgInfoFile, "r") as module_file:
@@ -95,15 +95,37 @@ for tree in module_trees:
                 pass
 
 #  Print out what we have for human consumpition
-for key in sorted(modInfo.keys(), key=str.lower):
-    print "==============================================="
-    print "\n", key
-    print "\t", "Versions: ", "; ".join(modInfo[key]['versions']).strip()
-    print "\t", "Description: ", modInfo[key]['pkgInfo']['pkg_desc']
-    if 'license' in modInfo[key]['pkgInfo']:
-        print "\t", "License: ", modInfo[key]['pkgInfo']['license']
-    if 'pkg_url' in modInfo[key]['pkgInfo']:
-        print "\t", "Package web site: ", modInfo[key]['pkgInfo']['pkg_url']
-    if 'categories' in modInfo[key]['pkgInfo']:
-        print "\t", "Categories: ", modInfo[key]['pkgInfo']['categories']
-print "==============================================="
+# for key in sorted(modInfo.keys(), key=str.lower):
+#     print "==============================================="
+#     print "\n", key
+#     print "\t", "Versions: ", "; ".join(modInfo[key]['versions']).strip()
+#     print "\t", "Description: ", modInfo[key]['pkgInfo']['pkg_desc']
+#     if 'license' in modInfo[key]['pkgInfo']:
+#         print "\t", "License: ", modInfo[key]['pkgInfo']['license']
+#     if 'pkg_url' in modInfo[key]['pkgInfo']:
+#         print "\t", "Package web site: ", modInfo[key]['pkgInfo']['pkg_url']
+#     if 'categories' in modInfo[key]['pkgInfo']:
+#         print "\t", "Categories: ", modInfo[key]['pkgInfo']['categories']
+# print "==============================================="
+
+def print_catalog():
+    #  Print out what we have for the catalog page
+    for key in sorted(modInfo.keys(), key=str.lower):
+        print "\n", key
+        print 60*"="
+        print "Versions: ", key+"/".join(modInfo[key]['versions'])
+        print "Description: ", modInfo[key]['pkgInfo']['pkg_desc']
+        if 'license' in modInfo[key]['pkgInfo']:
+            print "License: ", modInfo[key]['pkgInfo']['license']
+        print 60*"="
+
+def print_all():
+    #  Print out what we have for human consumption
+    for key in sorted(modInfo.keys(), key=str.lower):
+        print "\n", "Key: ", key,
+        print "\t", "Versions: ", key+"/".join(modInfo[key]['versions'])
+        for mod_info in modInfo[key]['pkgInfo'].keys():
+            print "\t", mod_info, ": ", modInfo[key]['pkgInfo'][mod_info]
+
+print_catalog()
+
