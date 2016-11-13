@@ -113,7 +113,7 @@ def item_label(label):
     return '{:<14}'.format(label)
 
 def wrapped_item(item):
-    return textwrap.fill(item,
+    return textwrap.fill(item, width=76,
                          initial_indent = '',
                          subsequent_indent = 14*' ')
 
@@ -121,14 +121,14 @@ def print_catalog():
     #  Print out what we have for the catalog page
     for key in sorted(modInfo.keys(), key=str.lower):
         print 2*"\n", key
-        print 60*"="
-        print wrapped_item(item_label("Versions:") + key+"/".join(modInfo[key]['versions']))
+        print 78*"="
+        print wrapped_item(item_label("Versions:") + "; ".join((modInfo[key]['versions'])))
         print wrapped_item(item_label("Description:") + modInfo[key]['pkgInfo']['pkg_desc'])
         if 'license' in modInfo[key]['pkgInfo']:
             print wrapped_item(item_label("License:") + modInfo[key]['pkgInfo']['license'])
         if 'categories' in modInfo[key]['pkgInfo']:
             print wrapped_item(item_label("Categories:") + modInfo[key]['pkgInfo']['categories'])
-        print 60*"="
+        print 78*"="
 
 def print_all():
     #  Print out what we have for human consumption
