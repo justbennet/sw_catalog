@@ -1,4 +1,5 @@
 import os
+import csv
 from   os.path import islink as islink
 import re
 import textwrap
@@ -130,6 +131,21 @@ def print_catalog():
             print wrapped_item(item_label("Categories:") + modInfo[key]['pkgInfo']['categories'])
         print 78*"="
 
+def print_csv():
+    with open('sw_catalog.csv', 'w') as csv_file:
+        csv_writer = csv.writer(csv_file, quoting=csv.QUOTE_NONNUMERIC)
+        csv_writer.writerow(["Module Name", "Description", "Versions", "License Information", "Categories"])
+        for key in sorted(modInfo.keys(), key=str.lower):
+            module_info = []
+            module_info.append(key)
+            module_info.append(modInfo[key]['pkgInfo']['pkg_desc'])
+            module_info.append("; ".join((modInfo[key]['versions'])))
+            if 'license' in modInfo[key]['pkgInfo']:
+                module_info.append(modInfo[key]['pkgInfo']['license'])
+            if 'categories' in modInfo[key]['pkgInfo']:
+                module_info.append(modInfo[key]['pkgInfo']['categories'])
+            csv_writer.writerow(module_info)
+
 def print_all():
     #  Print out what we have for human consumption
     for key in sorted(modInfo.keys(), key=str.lower):
@@ -138,5 +154,5 @@ def print_all():
         for mod_info in modInfo[key]['pkgInfo'].keys():
             print "\t", mod_info, ": ", modInfo[key]['pkgInfo'][mod_info]
 
-print_catalog()
-
+# print_catalog()
+print_csv()
