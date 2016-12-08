@@ -123,8 +123,8 @@ def print_catalog():
     for key in sorted(modInfo.keys(), key=str.lower):
         print 2*"\n", key
         print 78*"="
-        print wrapped_item(item_label("Versions:") + "; ".join((modInfo[key]['versions'])))
         print wrapped_item(item_label("Description:") + modInfo[key]['pkgInfo']['pkg_desc'])
+        print wrapped_item(item_label("Versions:") + "; ".join((modInfo[key]['versions'])))
         if 'license' in modInfo[key]['pkgInfo']:
             print wrapped_item(item_label("License:") + modInfo[key]['pkgInfo']['license'])
         if 'categories' in modInfo[key]['pkgInfo']:
@@ -132,7 +132,7 @@ def print_catalog():
         print 78*"="
 
 def print_csv():
-    with open('sw_catalog.csv', 'w') as csv_file:
+    with open('/afs/umich.edu/group/f/flux/Public/html/modules/sw_catalog.csv', 'w') as csv_file:
         csv_writer = csv.writer(csv_file, quoting=csv.QUOTE_NONNUMERIC)
         csv_writer.writerow(["Module Name", "Description", "Versions", "License Information", "Categories"])
         for key in sorted(modInfo.keys(), key=str.lower):
@@ -154,5 +154,5 @@ def print_all():
         for mod_info in modInfo[key]['pkgInfo'].keys():
             print "\t", mod_info, ": ", modInfo[key]['pkgInfo'][mod_info]
 
-# print_catalog()
+print_catalog()
 print_csv()
