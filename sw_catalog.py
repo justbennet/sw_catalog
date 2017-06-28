@@ -10,7 +10,10 @@ module_trees = [ ['arc',   '/sw/arc/centos7/modulefiles'],
                  ['coe',   '/sw/coe/centos7/modulefiles'],
                  ['lsa',   '/sw/lsa/centos7/modulefiles'],
                  ['med',   '/sw/med/centos7/modulefiles'],
-                 ['sph',   '/sw/sph/centos7/modulefiles'] ]
+                 ['sph',   '/sw/sph/centos7/modulefiles'],
+                 ['arcts', '/sw/oncampus/arc/centos7/modulefiles'],
+                 ['coe',   '/sw/oncampus/coe/centos7/modulefiles']
+               ]
 
 #  Regular expressions to pick out the files we need information from
 module_re = re.compile('^[0-9a-zA-Z].*.lua$')
